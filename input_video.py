@@ -32,7 +32,8 @@ def vis_pose_on_frame(frame, pose_results, style, thickness=2):
     bk.set_zorder(-1)
     for dt in pose_results:
         dt_joints = np.array(dt['keypoints']).reshape(17,-1)
-        joints_dict = {i: (int(x), int(y)) for i, (x, y) in enumerate(dt_joints)}
+        # Fix: Unpack x, y, score for each keypoint
+        joints_dict = {i: (int(x), int(y)) for i, (x, y, _) in enumerate(dt_joints)}
         # Draw skeleton
         for k, link_pair in enumerate(style.link_pairs):
             line = mlines.Line2D(
