@@ -126,7 +126,7 @@ docs_zh-CN/modelzoo.md
 *.DS_Store
 run.sh
 
-weights/*
+
 work_dirs/*
 README.pdf
 gen_script.py
