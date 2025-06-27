@@ -1,13 +1,16 @@
 Using input_video.py:
 
-python your_script.py \
-  --video input.mp4 \
-  --det-config path/to/det_config.py \
-  --det-ckpt path/to/det_ckpt.pth \
-  --pose-config path/to/pct_config.py \
-  --pose-ckpt path/to/pct_ckpt.pth \
-  --out-json output_keypoints.json \
-  --out-video output_annotated.mp4
+(PCT) tpark747949@snuh-medisc-2:~/clinicianpose$ PYTHONPATH="$(dirname $0)/..":$PYTHONPATH python vis_tools/demo_img_with_mmdet.py vis_tools/cascade_rcnn_x101_64x4d_fpn_coco.py https://download.openmmlab.com/mmdetection/v2.0/cascade_rcnn/cascade_rcnn_x101_64x4d_fpn_20e_coco/cascade_rcnn_x101_64x4d_fpn_20e_coco_20200509_224357-051557b1.pth configs/pct_base_classifier.py weights/pct/swin_base.pth --img-root images/ --out-img-root output/ --thickness 2 --img image8.jpg
+
+
+python input_video.py \
+  --video input/video/hanging.mp4 \
+  --det-config vis_tools/cascade_rcnn_x101_64x4d_fpn_coco.py \
+  --det-ckpt https://download.openmmlab.com/mmdetection/v2.0/cascade_rcnn/cascade_rcnn_x101_64x4d_fpn_20e_coco/cascade_rcnn_x101_64x4d_fpn_20e_coco_20200509_224357-051557b1.pth \
+  --pose-config configs/pct_base_classifier.py \
+  --pose-ckpt weights/pct/swin_base.pth \
+  --out-json output/video/hanging_annotated.json \
+  --out-video output/video/hanging_annotated.mp4
 
 Output format:
 
