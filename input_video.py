@@ -151,8 +151,8 @@ def main(
             "frame_index": frame_idx,
             "people": [
                 {
-                    "bbox": person['bbox'],
-                    "keypoints": person['keypoints']  # [x1, y1, score1, ...]
+                    "bbox": person['bbox'].tolist() if isinstance(person['bbox'], np.ndarray) else person['bbox'],
+                    "keypoints": person['keypoints'].tolist() if isinstance(person['keypoints'], np.ndarray) else person['keypoints']
                 }
                 for person in pose_results
             ]
