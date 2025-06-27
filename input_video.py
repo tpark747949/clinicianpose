@@ -166,6 +166,8 @@ def main(
     cap.release()
     if out_vid:
         out_vid.release()
+    # Ensure output directory exists before saving JSON
+    os.makedirs(os.path.dirname(output_json), exist_ok=True)
     # Save JSON
     with open(output_json, 'w') as f:
         json.dump(all_results, f, indent=2)
