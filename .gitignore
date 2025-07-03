@@ -121,7 +121,6 @@ docs_zh-CN/modelzoo.md
 
 # Pytorch
 *.pth
-*.json
 
 *.DS_Store
 run.sh
