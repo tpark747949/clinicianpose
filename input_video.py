@@ -26,40 +26,48 @@ def init_pose_model(config, checkpoint=None, device='cuda:0'):
     return model
 
 def vis_pose_on_frame(frame, pose_results, style, thickness=2):
-    fig = plt.figure(figsize=(frame.shape[1]/100, frame.shape[0]/100), dpi=100)
-    ax = plt.subplot(1,1,1)
-    bk = plt.imshow(frame[:,:,::-1])
-    bk.set_zorder(-1)
+    # Draw directly on a copy of the frame using OpenCV primitives
+    annotated = frame.copy()
     for dt in pose_results:
-        dt_joints = np.array(dt['keypoints']).reshape(17,-1)
-        # Fix: Unpack x, y, score for each keypoint
-        joints_dict = {i: (int(x), int(y)) for i, (x, y, _) in enumerate(dt_joints)}
+        dt_joints = np.array(dt['keypoints']).reshape(17, -1)
         # Draw skeleton
         for k, link_pair in enumerate(style.link_pairs):
-            line = mlines.Line2D(
-                [joints_dict[link_pair[0]][0], joints_dict[link_pair[1]][0]],
-                [joints_dict[link_pair[0]][1], joints_dict[link_pair[1]][1]],
-                ls='-', lw=thickness, alpha=1, color=link_pair[2])
-            line.set_zorder(0)
-            ax.add_line(line)
+            i, j, color = link_pair
+            x1, y1, s1 = dt_joints[i]
+            x2, y2, s2 = dt_joints[j]
+            # Only draw if both endpoints are inside the frame
+            if (0 <= x1 < frame.shape[1] and 0 <= y1 < frame.shape[0] and
+                0 <= x2 < frame.shape[1] and 0 <= y2 < frame.shape[0]):
+                cv2.line(
+                    annotated,
+                    (int(x1), int(y1)),
+                    (int(x2), int(y2)),
+                    tuple(int(255*c) for c in color),
+                    thickness=thickness,
+                    lineType=cv2.LINE_AA
+                )
         # Draw keypoints
         for k in range(dt_joints.shape[0]):
-            circle = mpatches.Circle(tuple(dt_joints[k,:2]), 
-                                     radius=thickness*2, 
-                                     ec='black', 
-                                     fc=style.ring_color[k], 
-                                     alpha=1, 
-                                     linewidth=1)
-            circle.set_zorder(1)
-            ax.add_patch(circle)
-    plt.axis('off')
-    plt.subplots_adjust(top=1,bottom=0,left=0,right=1,hspace=0,wspace=0)
-    plt.margins(0,0)
-    fig.canvas.draw()
-    annotated = np.frombuffer(fig.canvas.tostring_rgb(), dtype=np.uint8)
-    annotated = annotated.reshape(fig.canvas.get_width_height()[::-1] + (3,))
-    plt.close(fig)
-    return cv2.cvtColor(annotated, cv2.COLOR_RGB2BGR)
+            x, y, s = dt_joints[k]
+            if 0 <= x < frame.shape[1] and 0 <= y < frame.shape[0]:
+                color = tuple(int(255*c) for c in style.ring_color[k])
+                cv2.circle(
+                    annotated,
+                    (int(x), int(y)),
+                    radius=thickness*2,
+                    color=color,
+                    thickness=-1,
+                    lineType=cv2.LINE_AA
+                )
+                cv2.circle(
+                    annotated,
+                    (int(x), int(y)),
+                    radius=thickness*2,
+                    color=(0,0,0),
+                    thickness=1,
+                    lineType=cv2.LINE_AA
+                )
+    return annotated
 
 class ColorStyle:
     def __init__(self, color, link_pairs, point_color):
