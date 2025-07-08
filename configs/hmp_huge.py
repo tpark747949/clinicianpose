@@ -129,8 +129,7 @@ train_pipeline = [
         ],
         keymap={
             'img': 'image'
-        },
-        update_pad_shape=False
+        }
         ),
     dict(type='ToTensor'),
     dict(
