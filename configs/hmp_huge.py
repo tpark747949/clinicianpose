@@ -128,8 +128,6 @@ train_pipeline = [
                 random_offset=True,
                 p=0.5),
         ],
-        keymap={
-            'img': 'image'},
         bbox_params=A.BboxParams(
         format='coco',             # or 'pascal_voc', depending on your bboxes format
         label_fields=['bbox_labels'],  # name of the corresponding label field
