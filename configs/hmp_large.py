@@ -126,7 +126,12 @@ train_pipeline = [
                 unit_size_max=40,
                 random_offset=True,
                 p=0.5),
-        ]),
+        ],
+        keymap={
+            'img': 'image'
+        },
+        update_pad_shape=False
+        ),
     dict(type='ToTensor'),
     dict(
         type='NormalizeTensor',
