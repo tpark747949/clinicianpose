@@ -127,10 +127,9 @@ train_pipeline = [
                 random_offset=True,
                 p=0.5),
         ],
-        keymap={
-            'img': 'image',
-            'img_fields': ['image']
-        }
+        # keymap={
+        #     'img': 'image'
+        # }
         ),
     dict(type='ToTensor'),
     dict(
