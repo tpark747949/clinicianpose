@@ -1,3 +1,4 @@
+import albumentations as A
 _base_ = ['./coco_wholebody.py']
 log_level = 'INFO'
 load_from = None
@@ -128,10 +129,11 @@ train_pipeline = [
                 p=0.5),
         ],
         keymap={
-            'img': 'image',
-            'mask': 'masks',
-            'bbox': 'bboxes'
-            }
+            'img': 'image'},
+        bbox_params=A.BboxParams(
+        format='coco',             # or 'pascal_voc', depending on your bboxes format
+        label_fields=['bbox_labels'],  # name of the corresponding label field
+        min_visibility=0.0)
         ),
     dict(type='ToTensor'),
     dict(
