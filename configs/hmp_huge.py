@@ -127,7 +127,11 @@ train_pipeline = [
                 random_offset=True,
                 p=0.5),
         ],
-        keymap={'img': 'image'},  # This prevents 'image_file' from being expected
+        keymap={
+            'img': 'image',
+            'mask': 'masks',
+            'bbox': 'bboxes'
+            },
         update_pad_shape=False,
         bbox_params=None
         ),

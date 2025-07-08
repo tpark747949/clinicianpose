@@ -28,6 +28,8 @@ run_training() {
     fi
 }
 
+git pull origin main
+
 PYTHONPATH="$(dirname $0)/..":$PYTHONPATH
 # Train the first model
 run_training "configs/hmp_huge.py" "$WORK_DIR_BASE/heatmap"
