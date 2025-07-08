@@ -131,9 +131,7 @@ train_pipeline = [
             'img': 'image',
             'mask': 'masks',
             'bbox': 'bboxes'
-            },
-        update_pad_shape=False,
-        bbox_params=None
+            }
         ),
     dict(type='ToTensor'),
     dict(
