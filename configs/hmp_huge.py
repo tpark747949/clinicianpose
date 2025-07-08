@@ -127,9 +127,9 @@ train_pipeline = [
                 random_offset=True,
                 p=0.5),
         ],
-        # keymap={
-        #     'img': 'image'
-        # }
+        keymap={'img': 'image'},  # This prevents 'image_file' from being expected
+        update_pad_shape=False,
+        bbox_params=None
         ),
     dict(type='ToTensor'),
     dict(
