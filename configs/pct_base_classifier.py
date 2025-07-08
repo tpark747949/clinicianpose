@@ -1,4 +1,4 @@
-_base_ = ['./coco.py']
+_base_ = ['./coco_wholebody.py']
 log_level = 'INFO'
 load_from = None
 resume_from = None
