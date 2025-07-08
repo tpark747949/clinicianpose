@@ -28,6 +28,7 @@ run_training() {
     fi
 }
 
+PYTHONPATH="$(dirname $0)/..":$PYTHONPATH
 # Train the first model
 run_training "configs/hmp_huge.py" "$WORK_DIR_BASE/heatmap"
 
