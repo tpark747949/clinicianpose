@@ -170,28 +170,30 @@ data = dict(
     val_dataloader=dict(samples_per_gpu=32),
     test_dataloader=dict(samples_per_gpu=32),
     train=dict(
-        type='TopDownCocoWholeBodyDataset',
+        type='CocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_train2017.json',
-        img_prefix=f'{data_root}/images/train2017/',
+        data_prefix=dict(img=f'{data_root}/images/train2017/'),  # Use data_prefix instead of img_prefix
+        dataset_info={{_base_.dataset_info}}),        
         data_cfg=data_cfg,
         pipeline=train_pipeline,
         dataset_info={{_base_.dataset_info}}),
     val=dict(
-        type='TopDownCocoWholeBodyDataset',
+        type='CocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        img_prefix=f'{data_root}/images/val2017/',
+        data_prefix=dict(img=f'{data_root}/images/val2017/'),  # Same for validation
         data_cfg=data_cfg,
         pipeline=val_pipeline,
         dataset_info={{_base_.dataset_info}}),
     test=dict(
-        type='TopDownCocoWholeBodyDataset',
+        type='CocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        img_prefix=f'{data_root}/images/val2017/',
+        data_prefix=dict(img=f'{data_root}/images/val2017/'),  # Same for test
         data_cfg=data_cfg,
         pipeline=val_pipeline,
         dataset_info={{_base_.dataset_info}})
 )
 
+
+
 # fp16 settings
 fp16 = dict(loss_scale='dynamic')
-

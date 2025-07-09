@@ -18,6 +18,16 @@ from mmpose.datasets import build_dataset
 
 from models import build_posenet
 
+from mmpose.datasets.builder import DATASETS
+from mmpose.datasets.datasets.wholebody.coco_wholebody_dataset import CocoWholeBodyDataset
+
+if 'CocoWholeBodyDataset' not in DATASETS._module_dict:
+    DATASETS.register_module(name='CocoWholeBodyDataset', module=CocoWholeBodyDataset)
+else:
+    print("'CocoWholeBodyDataset' is already registered.")
+
+from mmpose.datasets.builder import DATASETS
+print(DATASETS._module_dict.keys())
 
 def parse_args():
     parser = argparse.ArgumentParser(description='Train a pose model')
@@ -142,8 +152,11 @@ def main():
     cfg.seed = args.seed
     meta['seed'] = args.seed
 
+    data_root="data/coco"
     model = build_posenet(cfg.model)
+    cfg.data.train.pop('dataset_info', None)
     datasets = [build_dataset(cfg.data.train)]
+
 
     if len(cfg.workflow) == 2:
         val_dataset = copy.deepcopy(cfg.data.val)
