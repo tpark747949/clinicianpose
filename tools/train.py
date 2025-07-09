@@ -154,7 +154,6 @@ def main():
 
     data_root="data/coco"
     model = build_posenet(cfg.model)
-    cfg.data.train.pop('dataset_info', None)
     datasets = [build_dataset(cfg.data.train)]
 
 
