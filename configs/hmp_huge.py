@@ -172,25 +172,27 @@ data = dict(
     train=dict(
         type='TopDownCocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_train2017.json',
-        data_prefix=dict(img=f'{data_root}/images/train2017/'),  # Use data_prefix instead of img_prefix
-        dataset_info={{_base_.dataset_info}}),        
+        data_prefix=dict(img=f'{data_root}/images/train2017/'),
         data_cfg=data_cfg,
         pipeline=train_pipeline,
-        dataset_info={{_base_.dataset_info}}),
+        dataset_info=_base_.dataset_info
+    ),
     val=dict(
         type='TopDownCocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        data_prefix=dict(img=f'{data_root}/images/val2017/'),  # Same for validation
+        data_prefix=dict(img=f'{data_root}/images/val2017/'),
         data_cfg=data_cfg,
         pipeline=val_pipeline,
-        dataset_info={{_base_.dataset_info}}),
+        dataset_info=_base_.dataset_info
+    ),
     test=dict(
         type='TopDownCocoWholeBodyDataset',
         ann_file=f'{data_root}/annotations/person_keypoints_val2017.json',
-        data_prefix=dict(img=f'{data_root}/images/val2017/'),  # Same for test
+        data_prefix=dict(img=f'{data_root}/images/val2017/'),
         data_cfg=data_cfg,
         pipeline=val_pipeline,
-        dataset_info={{_base_.dataset_info}})
+        dataset_info=_base_.dataset_info
+    )
 )
 
 
