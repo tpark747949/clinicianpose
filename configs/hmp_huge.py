@@ -127,11 +127,7 @@ train_pipeline = [
                 unit_size_max=40,
                 random_offset=True,
                 p=0.5),
-        ],
-        bbox_params=A.BboxParams(
-        format='coco',             # or 'pascal_voc', depending on your bboxes format
-        label_fields=['bbox_labels'],  # name of the corresponding label field
-        min_visibility=0.0)
+            ],
         ),
     dict(type='ToTensor'),
     dict(
